@@ -1,0 +1,48 @@
+@import 'tailwindcss';
+
+@theme {
+  --color-primary: #a529f4;
+}
+
+@layer base {
+  body {
+    @apply bg-[#2c3949] text-white min-h-screen grid place-items-center;
+  }
+  h1 {
+    @apply text-4xl font-light;
+  }
+  h2 {
+    @apply text-2xl;
+  }
+  button {
+    @apply bg-primary p-3 rounded-lg cursor-pointer shadow w-full hover:bg-[#8c1fd1] hover:shadow-lg active:translate-y-px;
+  }
+  pre {
+    @apply bg-[#171a1c] p-3 rounded;
+  }
+  strong {
+    @apply font-semibold;
+  }
+}
+
+@layer components {
+  .option {
+    @apply bg-[#3C4C67] flex p-2 gap-4 rounded-lg items-center shadow hover:shadow-lg cursor-pointer font-mono md:min-w-2xs;
+  }
+
+  .option-letter {
+    @apply bg-[#F4F8FB] text-black p-2 rounded w-8 h-8 flex justify-center items-center font-medium;
+  }
+
+  .option.selected {
+    @apply bg-primary;
+  }
+
+  .option.disabled {
+    @apply cursor-not-allowed pointer-events-none;
+  }
+
+  .card {
+    @apply bg-[#3C4C67] p-4 rounded-lg;
+  }
+}
