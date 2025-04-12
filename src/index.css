@@ -6,7 +6,7 @@
 
 @layer base {
   body {
-    @apply bg-[#2c3949] text-white min-h-screen grid place-items-center;
+    @apply bg-[#222] text-white min-h-screen grid place-items-center;
   }
   h1 {
     @apply text-4xl font-light;
@@ -26,6 +26,10 @@
 }
 
 @layer components {
+  .question-card {
+    @apply bg-[#ccc] text-black p-4 rounded-lg shadow-lg text-center;
+  }
+
   .option {
     @apply bg-[#3C4C67] flex p-2 gap-4 rounded-lg items-center shadow hover:shadow-lg cursor-pointer font-mono md:min-w-2xs;
   }

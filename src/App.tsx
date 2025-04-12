@@ -19,7 +19,8 @@ const App = () => {
     const fetchQuestions = async () => {
       const res = await fetch('./questions.json');
       const data: Question[] = await res.json();
-      setQuestions(data);
+      const shuffledQuestions = shuffleQuestions(data);
+      setQuestions(shuffledQuestions);
     };
 
     fetchQuestions();
@@ -49,15 +50,35 @@ const App = () => {
   };
 
   const showScoreRemarks = () => {
-    if (score >= 12) {
+    if (score === 10) {
       return 'Awesome job! You did grrrrrrrreat!';
-    } else if (score >= 9) {
+    } else if (score >= 8) {
       return "Good job! You did well, but there's some room for improvement...";
     } else if (score >= 6) {
       return 'Oh dear... You need to study harder!';
     } else if (score < 6) {
       return 'I have failed you... :(';
     }
+  };
+
+  const shuffleQuestions = (array: Question[]) => {
+    const shuffledQuestions = [...array];
+    let currentIndex = shuffledQuestions.length;
+
+    // While there remain elements to shuffle
+    while (currentIndex != 0) {
+      // Pick a remaining element
+      let randomIndex = Math.floor(Math.random() * currentIndex);
+      currentIndex--;
+
+      // And swap it with the current element
+      [shuffledQuestions[currentIndex], shuffledQuestions[randomIndex]] = [
+        shuffledQuestions[randomIndex],
+        shuffledQuestions[currentIndex]
+      ];
+    }
+
+    return shuffledQuestions;
   };
 
   return (
@@ -71,28 +92,34 @@ const App = () => {
         {screen === 'welcome' && (
           <div>
             <h1 className='text-center mb-12'>
-              Welcome to the <br />
-              <strong>Python Quiz!</strong>
+              Python Quiz: <strong>Lists</strong>
             </h1>
             <button onClick={() => setScreen('quiz')}>Start</button>
           </div>
         )}
         {screen === 'quiz' && (
           <div>
-            <p className='opacity-75'>
-              Question {questionIndex + 1} of {questions.length}
-            </p>
-            <div className='mb-6'>
-              <h2 className='font-semibold'>{currentQuestion.question}</h2>
-              {currentQuestion.codeSnippet && (
-                <pre className='mt-4 flex flex-col'>
-                  {currentQuestion.codeSnippet
-                    .split('<br />')
-                    .map((line, index) => (
-                      <code key={index}>{line}</code>
-                    ))}
-                </pre>
-              )}
+            <div className='flex flex-col gap-4 question-card h-[250px] mb-4'>
+              <p className='opacity-75'>
+                Question {questionIndex + 1} of {questions.length}
+              </p>
+              <div className='flex-1 flex items-center justify-center'>
+                <div>
+                  <h2 className='font-semibold'>{currentQuestion.question}</h2>
+                  {currentQuestion.codeSnippet && (
+                    <pre className='mt-4 flex flex-col'>
+                      {currentQuestion.codeSnippet
+                        .split('\n')
+                        .map((line, index) => (
+                          <code key={index} className='text-white text-left'>
+                            {line}
+                          </code>
+                        ))}
+                    </pre>
+                  )}
+                </div>
+              </div>
+              <p>&nbsp;</p>
             </div>
             <div
               className={`grid md:grid-cols-2 gap-4 mb-4 ${
